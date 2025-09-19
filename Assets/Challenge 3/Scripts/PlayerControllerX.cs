@@ -8,7 +8,8 @@ public class PlayerControllerX : MonoBehaviour
     public bool isLowEnough;
     public bool shouldBounceBack;
 
-    public float floatForce;
+    private readonly float floatForce = 50;
+    private readonly float bounceForce = 10;
     private float gravityModifier = 1.5f;
     private Rigidbody playerRb;
 
@@ -47,7 +48,7 @@ public class PlayerControllerX : MonoBehaviour
         // if player exceeds the top bound, bounce down
         if (shouldBounceBack)
         {
-            playerRb.AddForce(10 * floatForce * Vector3.down, ForceMode.Impulse);
+            playerRb.AddForce(bounceForce * Vector3.down, ForceMode.Impulse);
         }
     }
 
@@ -74,7 +75,8 @@ public class PlayerControllerX : MonoBehaviour
         // if player collides with ground, bounce up
         else if (other.gameObject.CompareTag("Ground") && !gameOver)
         {
-            playerRb.AddForce(10 * floatForce * Vector3.up, ForceMode.Impulse);
+            transform.position = new Vector3(transform.position.x, other.gameObject.transform.position.y, transform.position.z);
+            playerRb.AddForce(bounceForce * Vector3.up, ForceMode.Impulse);
             playerAudio.PlayOneShot(boingSound, 1.0f);
         }
 

@@ -40,6 +40,8 @@ public class RepeatBackgroundX : MonoBehaviour
         // indicate if player has exceeded the background height
         if (player.transform.position.y > backgroundHeight)
         {
+            // limit player ceiling and indicate for push back
+            player.transform.position = new Vector3(player.transform.position.x, backgroundHeight, player.transform.position.z);
             player.shouldBounceBack = true;
         }
         else
